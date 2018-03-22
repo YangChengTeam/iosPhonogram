@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SwitchView">
+            <connections>
+                <outlet property="indexBtn" destination="4kM-m8-JeC" id="bLW-Pk-dK2"/>
+                <outlet property="leftBtn" destination="3yv-9j-mbD" id="YDg-gx-Hb9"/>
+                <outlet property="rightBtn" destination="tVw-yG-p40" id="oVS-Gk-x4L"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="608" height="42"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3yv-9j-mbD" userLabel="left">
+                    <rect key="frame" x="0.0" y="0.0" width="41" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="41" id="bZY-oI-A8V"/>
+                        <constraint firstAttribute="height" constant="42" id="rvI-2l-hTi"/>
+                    </constraints>
+                    <state key="normal" image="main_bg_left"/>
+                    <state key="disabled" image="main_bg_left_disable"/>
+                    <state key="highlighted" image="main_bg_left_selected"/>
+                    <connections>
+                        <action selector="switchPage:" destination="-1" eventType="touchUpInside" id="EJq-dR-Xwa"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4kM-m8-JeC">
+                    <rect key="frame" x="268.5" y="13" width="71" height="29"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="71" id="3J6-66-Cvv"/>
+                        <constraint firstAttribute="height" constant="29" id="gCh-6F-7un"/>
+                    </constraints>
+                    <state key="normal" title="1/48" backgroundImage="main_bg_index">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                </button>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tVw-yG-p40" userLabel="right">
+                    <rect key="frame" x="567" y="0.0" width="41" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="41" id="D4O-Sc-GIj"/>
+                        <constraint firstAttribute="height" constant="42" id="z8J-F9-UJm"/>
+                    </constraints>
+                    <state key="normal" image="main_bg_right"/>
+                    <state key="disabled" image="main_bg_right_disable"/>
+                    <state key="highlighted" image="main_bg_right_selected"/>
+                    <connections>
+                        <action selector="switchPage:" destination="-1" eventType="touchUpInside" id="tpc-C0-RNc"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="4kM-m8-JeC" secondAttribute="bottom" id="JBO-wP-Qww"/>
+                <constraint firstItem="4kM-m8-JeC" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="KN4-7Y-4yt"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="tVw-yG-p40" secondAttribute="bottom" id="hIX-o1-39f"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="3yv-9j-mbD" secondAttribute="bottom" id="tqr-o4-PA5"/>
+                <constraint firstItem="3yv-9j-mbD" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="wgK-Ab-weK"/>
+                <constraint firstItem="tVw-yG-p40" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="z6C-ii-ZFu"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="-68" y="-31"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="main_bg_index" width="107" height="43"/>
+        <image name="main_bg_left" width="62" height="63"/>
+        <image name="main_bg_left_disable" width="124" height="126"/>
+        <image name="main_bg_left_selected" width="62" height="63"/>
+        <image name="main_bg_right" width="62" height="63"/>
+        <image name="main_bg_right_disable" width="124" height="126"/>
+        <image name="main_bg_right_selected" width="62" height="63"/>
+    </resources>
+</document>

@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface InterestContentViewController : BaseViewController
-
+@property (nonatomic, strong) NSDictionary *classInfo;
 @end

@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSDictionary *loginInfo;
 @property (nonatomic, strong) NSArray *phoneticList;
+@property (nonatomic, strong) NSDictionary *phoneticClass;
 
 @property (strong, nonatomic) UIWindow *window;
 

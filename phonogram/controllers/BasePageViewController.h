@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 #import "UIPageViewController+Fix.h"
+#import "SwitchView.h"
 
-@interface BasePageViewController : BaseViewController
-
+@interface BasePageViewController : BaseViewController<SwitchViewDelegate>
+@property (nonatomic, assign) IBOutlet SwitchView *switchView;
 @property (nonatomic, assign) IBOutlet UIView *pageContainerView;
 
 @property (nonatomic, strong) UIPageViewController *pageViewController;

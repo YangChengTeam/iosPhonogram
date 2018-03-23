@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="landscape">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -12,64 +12,64 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SwitchView">
             <connections>
-                <outlet property="indexBtn" destination="4kM-m8-JeC" id="bLW-Pk-dK2"/>
-                <outlet property="leftBtn" destination="3yv-9j-mbD" id="YDg-gx-Hb9"/>
-                <outlet property="rightBtn" destination="tVw-yG-p40" id="oVS-Gk-x4L"/>
+                <outlet property="indexBtn" destination="3qD-rS-jcj" id="QzT-tr-jm5"/>
+                <outlet property="leftBtn" destination="dxi-Mf-0XB" id="Lf4-9T-Sf9"/>
+                <outlet property="rightBtn" destination="8UG-7b-zTO" id="2IY-Y2-Adg"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="608" height="42"/>
+        <view contentMode="scaleToFill" id="Zwh-MK-lPi">
+            <rect key="frame" x="0.0" y="0.0" width="250" height="42"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3yv-9j-mbD" userLabel="left">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxi-Mf-0XB" userLabel="left">
                     <rect key="frame" x="0.0" y="0.0" width="41" height="42"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="41" id="bZY-oI-A8V"/>
-                        <constraint firstAttribute="height" constant="42" id="rvI-2l-hTi"/>
+                        <constraint firstAttribute="width" constant="41" id="UNN-bH-a2C"/>
+                        <constraint firstAttribute="height" constant="42" id="Uco-8Q-vmg"/>
                     </constraints>
                     <state key="normal" image="main_bg_left"/>
                     <state key="disabled" image="main_bg_left_disable"/>
                     <state key="highlighted" image="main_bg_left_selected"/>
                     <connections>
-                        <action selector="switchPage:" destination="-1" eventType="touchUpInside" id="EJq-dR-Xwa"/>
+                        <action selector="switchPage:" destination="-1" eventType="touchUpInside" id="9KH-xe-wWL"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4kM-m8-JeC">
-                    <rect key="frame" x="268.5" y="13" width="71" height="29"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qD-rS-jcj">
+                    <rect key="frame" x="89.5" y="6.5" width="71" height="29"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="71" id="3J6-66-Cvv"/>
-                        <constraint firstAttribute="height" constant="29" id="gCh-6F-7un"/>
+                        <constraint firstAttribute="width" constant="71" id="OA4-K7-Xa0"/>
+                        <constraint firstAttribute="height" constant="29" id="cRl-Rf-PbC"/>
                     </constraints>
                     <state key="normal" title="1/48" backgroundImage="main_bg_index">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                 </button>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tVw-yG-p40" userLabel="right">
-                    <rect key="frame" x="567" y="0.0" width="41" height="42"/>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8UG-7b-zTO" userLabel="right">
+                    <rect key="frame" x="209" y="0.0" width="41" height="42"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="41" id="D4O-Sc-GIj"/>
-                        <constraint firstAttribute="height" constant="42" id="z8J-F9-UJm"/>
+                        <constraint firstAttribute="height" constant="42" id="1g8-YS-QgY"/>
+                        <constraint firstAttribute="width" constant="41" id="UQo-vq-Yla"/>
                     </constraints>
                     <state key="normal" image="main_bg_right"/>
                     <state key="disabled" image="main_bg_right_disable"/>
                     <state key="highlighted" image="main_bg_right_selected"/>
                     <connections>
-                        <action selector="switchPage:" destination="-1" eventType="touchUpInside" id="tpc-C0-RNc"/>
+                        <action selector="switchPage:" destination="-1" eventType="touchUpInside" id="CSD-BI-tyW"/>
                     </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="4kM-m8-JeC" secondAttribute="bottom" id="JBO-wP-Qww"/>
-                <constraint firstItem="4kM-m8-JeC" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="KN4-7Y-4yt"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="tVw-yG-p40" secondAttribute="bottom" id="hIX-o1-39f"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="3yv-9j-mbD" secondAttribute="bottom" id="tqr-o4-PA5"/>
-                <constraint firstItem="3yv-9j-mbD" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="wgK-Ab-weK"/>
-                <constraint firstItem="tVw-yG-p40" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="z6C-ii-ZFu"/>
+                <constraint firstItem="3qD-rS-jcj" firstAttribute="centerX" secondItem="4fg-tL-5qm" secondAttribute="centerX" id="14C-Zb-wSC"/>
+                <constraint firstItem="4fg-tL-5qm" firstAttribute="trailing" secondItem="8UG-7b-zTO" secondAttribute="trailing" id="1cy-sR-5fP"/>
+                <constraint firstItem="dxi-Mf-0XB" firstAttribute="leading" secondItem="4fg-tL-5qm" secondAttribute="leading" id="7aN-Pq-s7X"/>
+                <constraint firstItem="3qD-rS-jcj" firstAttribute="centerY" secondItem="4fg-tL-5qm" secondAttribute="centerY" id="fOv-uu-cFR"/>
+                <constraint firstItem="4fg-tL-5qm" firstAttribute="bottom" secondItem="8UG-7b-zTO" secondAttribute="bottom" id="fmV-oZ-ixQ"/>
+                <constraint firstItem="4fg-tL-5qm" firstAttribute="bottom" secondItem="dxi-Mf-0XB" secondAttribute="bottom" id="s0a-JY-d2D"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <viewLayoutGuide key="safeArea" id="4fg-tL-5qm"/>
             <point key="canvasLocation" x="-68" y="-31"/>
         </view>
     </objects>

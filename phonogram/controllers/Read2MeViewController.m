@@ -9,12 +9,9 @@
 #import "Read2MeViewController.h"
 #import "Config.h"
 #import "AppDelegate.h"
-#import "SwitchView.h"
 #import "Read2meContentViewController.h"
 
-@interface Read2MeViewController ()<SwitchViewDelegate>
-
-@property (nonatomic, assign) IBOutlet SwitchView *switchView;
+@interface Read2MeViewController ()
 
 @end
 
@@ -54,19 +51,7 @@
     }
 }
 
-- (void)switchPage:(NSInteger)index {
-    __weak typeof(self) weakSelf = self;
-    [self.pageViewController setViewControllers:@[self.datasource[index]] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:^(BOOL finished) {
-        if(finished) {
-            weakSelf.pageViewController.view.userInteractionEnabled = YES;
-        }
-    }];
-    [self.switchView setIndexInfo:index];
-}
 
-- (void)switched:(NSInteger)index {
-    [self.switchView setIndexInfo:index];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -15,6 +15,8 @@
 		4BA958C42063381000D71D14 /* BaseVoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA958C32063381000D71D14 /* BaseVoiceViewController.m */; };
 		4BA958CA2063542700D71D14 /* UIPageViewController+Fix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA958C92063542700D71D14 /* UIPageViewController+Fix.m */; };
 		4BA958CD20637D5100D71D14 /* ALabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA958CC20637D5100D71D14 /* ALabel.m */; };
+		4BA958CF2064925700D71D14 /* SwitchView$2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BA958CE2064925700D71D14 /* SwitchView$2.xib */; };
+		4BA958D22064ABAD00D71D14 /* PhoneticListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA958D12064ABAD00D71D14 /* PhoneticListViewController.m */; };
 		4BF84831205F492C00794E70 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF84830205F492C00794E70 /* AppDelegate.m */; };
 		4BF84834205F492C00794E70 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF84833205F492C00794E70 /* MainViewController.m */; };
 		4BF84837205F492C00794E70 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BF84835205F492C00794E70 /* Main.storyboard */; };
@@ -64,6 +66,9 @@
 		4BA958C92063542700D71D14 /* UIPageViewController+Fix.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIPageViewController+Fix.m"; sourceTree = "<group>"; };
 		4BA958CB20637D5100D71D14 /* ALabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALabel.h; sourceTree = "<group>"; };
 		4BA958CC20637D5100D71D14 /* ALabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALabel.m; sourceTree = "<group>"; };
+		4BA958CE2064925700D71D14 /* SwitchView$2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwitchView$2.xib; sourceTree = "<group>"; };
+		4BA958D02064ABAD00D71D14 /* PhoneticListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhoneticListViewController.h; sourceTree = "<group>"; };
+		4BA958D12064ABAD00D71D14 /* PhoneticListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhoneticListViewController.m; sourceTree = "<group>"; };
 		4BF8482C205F492C00794E70 /* 音标点读.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "音标点读.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BF8482F205F492C00794E70 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4BF84830205F492C00794E70 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -222,6 +227,8 @@
 				4BA958C32063381000D71D14 /* BaseVoiceViewController.m */,
 				4BA958C82063542700D71D14 /* UIPageViewController+Fix.h */,
 				4BA958C92063542700D71D14 /* UIPageViewController+Fix.m */,
+				4BA958D02064ABAD00D71D14 /* PhoneticListViewController.h */,
+				4BA958D12064ABAD00D71D14 /* PhoneticListViewController.m */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -261,6 +268,7 @@
 				4BFE6D642060DE9B0026E27F /* SwitchView.h */,
 				4BFE6D652060DE9B0026E27F /* SwitchView.m */,
 				4BFE6D672060DEAD0026E27F /* SwitchView.xib */,
+				4BA958CE2064925700D71D14 /* SwitchView$2.xib */,
 				4BFE6D6F2061E04F0026E27F /* LearnSampleCellCollectionViewCell.h */,
 				4BFE6D702061E04F0026E27F /* LearnSampleCellCollectionViewCell.m */,
 				4BFE6D80206227230026E27F /* VideoPlayView.h */,
@@ -386,6 +394,7 @@
 				4BF84839205F492C00794E70 /* Assets.xcassets in Resources */,
 				4BFE6D5C205F9AD10026E27F /* guide_01.mp3 in Resources */,
 				4BFE6D682060DEAD0026E27F /* SwitchView.xib in Resources */,
+				4BA958CF2064925700D71D14 /* SwitchView$2.xib in Resources */,
 				4BF84837205F492C00794E70 /* Main.storyboard in Resources */,
 				4BFE6D5B205F9AD10026E27F /* guide_02.mp3 in Resources */,
 				4BFE6D5A205F9AD10026E27F /* user_tape_tips.mp3 in Resources */,
@@ -477,6 +486,7 @@
 				4BA958BE2062606400D71D14 /* Read2meContentViewController.m in Sources */,
 				4BFE6CD1205F59080026E27F /* NetUtils.m in Sources */,
 				4BFE6CCB205F58F10026E27F /* RSA.m in Sources */,
+				4BA958D22064ABAD00D71D14 /* PhoneticListViewController.m in Sources */,
 				4BF84834205F492C00794E70 /* MainViewController.m in Sources */,
 				4BF8483F205F492C00794E70 /* main.m in Sources */,
 				4BFE6CDE205F60B10026E27F /* LearnViewController.m in Sources */,

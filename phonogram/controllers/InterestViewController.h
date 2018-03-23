@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface InterestViewController : UIViewController
+#import "BasePageViewController.h"
+@interface InterestViewController : BasePageViewController
 
 @end

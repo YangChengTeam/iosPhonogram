@@ -36,7 +36,7 @@
     self.pageViewController.delegate = self;
 }
 
-# pragma  -- pageViewController datasource
+# pragma  mark-- pageViewController datasource
 - (NSInteger)indexForViewController:(UIViewController *)controller {
     return [self.datasource indexOfObject:controller];
 }
@@ -62,7 +62,7 @@
     return [self.datasource objectAtIndex:index];
 }
 
-# pragma -- pageViewController delegate
+# pragma mark-- pageViewController delegate
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers {
     self.pageViewController.view.userInteractionEnabled = NO;
     self.currentIndex = [self.datasource indexOfObject:[pendingViewControllers firstObject]];
@@ -76,6 +76,21 @@
             [self switched:self.currentIndex];
         }
     }
+}
+
+# pragma mark-- switchView delegate
+- (void)switchPage:(NSInteger)index {
+    __weak typeof(self) weakSelf = self;
+    [self.pageViewController setViewControllers:@[self.datasource[index]] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:^(BOOL finished) {
+        if(finished) {
+            weakSelf.pageViewController.view.userInteractionEnabled = YES;
+        }
+    }];
+    [self.switchView setIndexInfo:index];
+}
+
+- (void)switched:(NSInteger)index {
+    [self.switchView setIndexInfo:index];
 }
 
 - (void)didReceiveMemoryWarning {

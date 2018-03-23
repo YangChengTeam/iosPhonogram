@@ -38,6 +38,13 @@
 
         }
     }];
+    [NetUtils postWithUrl:MCLASS_LIST_URL params:nil callback:^(NSDictionary *data) {
+        if(data && [data[@"code"] integerValue] == 1) {
+            [AppDelegate sharedAppDelegate].phoneticClass = data[@"data"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPhoneticClassLoadCompleted object:nil];
+            
+        }
+    }];
    
 }
 

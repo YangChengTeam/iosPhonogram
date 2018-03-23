@@ -12,10 +12,7 @@
 #import "SwitchView.h"
 #import "Config.h"
 
-@interface LearnViewController ()<SwitchViewDelegate>
-
-@property (nonatomic, assign) IBOutlet SwitchView *switchView;
-
+@interface LearnViewController ()
 @end
 
 @implementation LearnViewController
@@ -56,19 +53,7 @@
     }
 }
 
-- (void)switchPage:(NSInteger)index {
-    __weak typeof(self) weakSelf = self;
-    [self.pageViewController setViewControllers:@[self.datasource[index]] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:^(BOOL finished) {
-        if(finished) {
-            weakSelf.pageViewController.view.userInteractionEnabled = YES;
-        }
-    }];
-    [self.switchView setIndexInfo:index];
-}
 
-- (void)switched:(NSInteger)index {
-    [self.switchView setIndexInfo:index];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

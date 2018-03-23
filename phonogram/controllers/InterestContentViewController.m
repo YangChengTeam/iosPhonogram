@@ -7,10 +7,11 @@
 //
 
 #import "InterestContentViewController.h"
+#import "VideoPlayView.h"
 
 @interface InterestContentViewController ()
 
-
+@property (nonatomic, assign) IBOutlet VideoPlayView *playerView;
 
 @end
 
@@ -19,6 +20,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    if(self.classInfo) {
+        self.playerView.videoUrl = [self.classInfo[@"video"] stringByTrimmingCharactersInSet:
+                                    [NSCharacterSet whitespaceAndNewlineCharacterSet]] ;
+        [self.playerView setCoverUrl: self.classInfo[@"cover"]];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    if(self.playerView){
+        [self.playerView destory];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

@@ -185,7 +185,7 @@
 - (void)setAudioSession {
     AVAudioSession *audioSession=[AVAudioSession sharedInstance];
     //设置为播放和录音状态，以便可以在录制完之后播放录音
-    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord  withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:nil ];
     [audioSession setActive:YES error:nil];
 }
 

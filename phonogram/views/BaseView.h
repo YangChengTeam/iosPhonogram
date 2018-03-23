@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface BaseView : UIView
+@property (nonatomic, copy) NSString *className;
 
 - (void)customInit;
 

@@ -13,13 +13,22 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if(self){
-        [self customInit];
+        
     }
     return self;
 }
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self customInit];
+}
+
 - (void)customInit {
-    NSArray *array = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil];
+    NSString *className = self.className;
+    if(!className){
+        className = NSStringFromClass([self class]);
+    }
+    NSArray *array = [[NSBundle mainBundle] loadNibNamed:className owner:self options:nil];
     UIView *contentView = [array firstObject];
     [self addSubview:contentView];
 }

@@ -30,6 +30,9 @@
             [AppDelegate sharedAppDelegate].loginInfo = data[@"data"];
         } else {
             msg = data[@"msg"];
+            if(!msg){
+                msg = [NSString stringWithFormat:@"错误代码:%@", data[@"code"]];
+            }
         }
     }];
 }

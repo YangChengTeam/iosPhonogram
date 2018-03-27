@@ -242,7 +242,7 @@
     [self startRecord];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewDidDisappear:(BOOL)animated {
     [self over];
 }
 

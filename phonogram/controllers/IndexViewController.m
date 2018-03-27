@@ -20,8 +20,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self setupUserInfo: nil];
+    self.userLbl.adjustsFontSizeToFitWidth = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setupUserInfo:)
+                                                 name:kNotiVipChange
+                                               object:nil];
+}
+
+- (void)setupUserInfo:(NSNotification *)noti {
     if([AppDelegate sharedAppDelegate].loginInfo){
-        self.userLbl.text = [NSString stringWithFormat:@"用户名：SE%@",[AppDelegate sharedAppDelegate].loginInfo[@"user_info"][@"user_id"]];
+        NSString *uInfo = @"用户名";
+        if([[AppDelegate sharedAppDelegate] isVip]){
+            uInfo = @"尊敬的会员";
+        }
+        self.userLbl.text = [NSString stringWithFormat:@"%@：SE%@",uInfo,[AppDelegate sharedAppDelegate].loginInfo[@"user_info"][@"user_id"]];
     }
 }
 

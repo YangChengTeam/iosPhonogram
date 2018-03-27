@@ -30,13 +30,13 @@
     self.vipInfoView.layer.borderColor = kColorWithHex(0xFFD391).CGColor;
     
     self.style = UIPageViewControllerTransitionStylePageCurl;
-    
+    self.type = @"class";
     if([AppDelegate sharedAppDelegate].phoneticClass){
         [self initPageViewController];
         [self setupVipInfo];
         return;
     } else {
-        [self show:@"正在加载"];
+        [self show:@"正在加载..."];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(setupPhoneticClass:)
                                                      name:kNotiPhoneticClassLoadCompleted

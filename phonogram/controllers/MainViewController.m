@@ -10,6 +10,8 @@
 #import "AppDelegate.h"
 #import "NetUtils.h"
 #import "Config.h"
+#import "ShareViewController.h"
+#import "UIView+Toast.h"
 
 @interface MainViewController ()
 
@@ -38,14 +40,37 @@
 
         }
     }];
+    
     [NetUtils postWithUrl:MCLASS_LIST_URL params:nil callback:^(NSDictionary *data) {
         if(data && [data[@"code"] integerValue] == 1) {
             [AppDelegate sharedAppDelegate].phoneticClass = data[@"data"];
             [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPhoneticClassLoadCompleted object:nil];
-            
         }
     }];
-   
+    
+    [NetUtils postWithUrl:VIP_LIST_URL params:nil callback:^(NSDictionary *data) {
+        if(data && [data[@"code"] integerValue] == 1) {
+            NSMutableArray *tmpVipList =  [[NSMutableArray alloc] init];
+            for(NSDictionary *vipInfo in data[@"data"][@"vip_list"]){
+                NSMutableDictionary *tmpVipInfo = [[NSMutableDictionary alloc] initWithDictionary:vipInfo];
+                [tmpVipList addObject:tmpVipInfo];
+            }
+            [AppDelegate sharedAppDelegate].vipList = tmpVipList;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotiVipListLoadCompleted object:nil];
+             [[NSNotificationCenter defaultCenter] postNotificationName:kNotiVipChange object:nil];
+        }
+    }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(shareSuccess:)
+                                                 name:kNotiShareSuccess
+                                               object:nil];
+}
+
+- (void)shareSuccess:(NSNotification *)sender {
+    [self.view makeToast:@"分享成功"
+                    duration:3.0
+                    position:CSToastPositionCenter];
 }
 
 - (void)initDatasource {
@@ -116,15 +141,29 @@
 }
 
 - (IBAction)share:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *popupViewController = nil;
     if(type == 0){
-        
-    }else if(type == 1){
-        
+        popupViewController = [storyboard instantiateViewControllerWithIdentifier:@"share"];
+    } else if(type == 1){
+        popupViewController = [storyboard instantiateViewControllerWithIdentifier:@"list"];
     }
+    if(!popupViewController){
+        return;
+    }
+    popupViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    popupViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    self.definesPresentationContext = YES;
+    [self presentViewController:popupViewController animated:YES completion:nil];
 }
 
 - (IBAction)pay:(id)sender {
-    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *popupViewController = [storyboard instantiateViewControllerWithIdentifier:@"pay"];
+    popupViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    popupViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    self.definesPresentationContext = YES;
+    [self presentViewController:popupViewController animated:YES completion:nil];
 }
 
 

@@ -6,8 +6,8 @@
 //  Copyright © 2018年 zhangkai. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BasePopupViewController.h"
 
-@interface PayViewController : BaseViewController
+@interface PayViewController : BasePopupViewController
 
 @end

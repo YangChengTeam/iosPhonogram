@@ -7,11 +7,15 @@
 //
 
 #import "BaseView.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import <AVFoundation/AVFoundation.h>
+#import <AVKit/AVKit.h>
 
 @interface VideoPlayView : BaseView
 @property (nonatomic, copy) NSString *videoUrl;
+@property (nonatomic, assign) BOOL isFullScreen;
+@property (strong,nonatomic) AVPlayerViewController *moviePlayer;
 
 - (void)setCoverUrl:(NSString *)coverUrl;
 - (void)destory;
-
 @end

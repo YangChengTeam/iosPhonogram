@@ -7,24 +7,11 @@
 //
 
 #import "EncrytUtils.h"
-#import "RSA.h"
+#import "NetRSA.h"
 #import "NSData+GZIP.h"
 
 
-static NSString *pubkey = @"-----BEGIN PUBLIC KEY----- \
-MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAsDodkyEPbvjtJzYE9LUO \
-IK7lqgMHoCMSdC/dPjAT+e63tYC/Zq0lOoMj3UYst4pReSCDTI5V+AsByskDZUs3 \
-DTn2gUm0GsntRTDlMSB/4ZeeyTBfKehNeP20wHlrN9olndedo7kyf8mdM+5IKIcI \
-knW1yJq+ZW/0yzHkSTZ8T0pJ0egHTp+sG6wWbvpFQGkXHqZ2ItNSMuT/UNqGRH3e \
-ugcJxaITCgKMK/bCiyaRl7NU80qmWuXVvYcDGuo9iIFF/CAm2gF3fZuBNHVZJuaY \
-LT+61F0fckoMcqNXvU9GnAbyDw32RN8LsPhIRxeGIKzDv/UoB9SL2+CoKaOACG0x \
-Jz22MgtSowf+jEPHc3x8KrjfmGkvJNW0wJuDEQIRZw+S/h9r/OrWhz4J/+JJrt+a \
-gjMewuet0Ch0yIRcpecbRUWjk8rg2d4UeQgqk4bxoMjKuF5dDnZgyPxxnS671TgH \
-19E7vmajJ8fn2+vcO/QDk0/4Qq8h4HQ6d0XY8xj+WtMDbKBQqYOr7KDVnk3zllAS \
-2us97aqEPVspu3EBiIYP4mJi9ENxSA+A9RkGYTq7x2RY8dp5YZgRulevUMQcESCP \
-/DO8fJNTIU6fq7uTsuvemjtyMZ8Z3Qmafsbf/0CPfksX4qqNLfHalBgiyrjZjkb9 \
-t5XISoQ1s3S+oye4FeMT7ycCAwEAAQ== \
------END PUBLIC KEY-----";
+static NSString *pubkey = @"-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA1zQ4FOFmngBVc05sg7X5\nZ/e3GrhG4rRAiGciUCsrd/n4wpQcKNoOeiRahxKT1FVcC6thJ/95OgBN8jaDzKdd\ncMUti9gGzBDpGSS8MyuCOBXc6KCOYzL6Q4qnlGW2d09blZSpFUluDBBwB86yvOxk\n5oEtnf6WPw2wiWtm7JR1JrE1k+adYfy+Cx9ifJX3wKZ5X3n+CdDXbUCPBD63eMBn\ndy1RYOgI1Sc67bQlQGoFtrhXOGrJ8vVoRNHczaGeBOev96/V0AiEY2f5Kw5PAWhw\nNrAF94DOLu/4OyTVUg9rDC7M97itzBSTwvJ4X5JA9TyiXL6c/77lThXvX+8m/VLi\nmLR7PNq4e0gUCGmHCQcbfkxZVLsa4CDg2oklrT4iHvkK4ZtbNJ2M9q8lt5vgsMkb\nbLLqe9IuTJ9O7Pemp5Ezf8++6FOeUXBQTwSHXuxBNBmZAonNZO1jACfOzm83zEE2\n+Libcn3EBgxPnOB07bDGuvx9AoSzLjFk/T4ScuvXKEhk1xqApSvtPADrRSskV0aE\nG5F8PfBF//krOnUsgqAgujF9unKaxMJXslAJ7kQm5xnDwn2COGd7QEnOkFwqMJxr\nDmcluwXXaZXt78mwkSNtgorAhN6fXMiwRFtwywqoC3jYXlKvbh3WpsajsCsbTiCa\nSBq4HbSs5+QTQvmgUTPwQikCAwEAAQ==\n-----END PUBLIC KEY-----\n";
 
 
 static char *k = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ*!";
@@ -72,7 +59,7 @@ static char *k = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 }
 
 + (NSString *)rsaWithPublickey:(NSString *)publicKey data:(NSString *)jsonStr {
-    return [RSA encryptString:jsonStr publicKey:publicKey];
+    return [NetRSA encryptString:jsonStr publicKey:publicKey];
 }
 
 + (NSData *)gzipByRsa:(NSString *)jsonStr {

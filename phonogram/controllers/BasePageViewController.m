@@ -7,6 +7,8 @@
 //
 
 #import "BasePageViewController.h"
+#import "Config.h"
+#import "AppDelegate.h"
 
 @interface BasePageViewController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
@@ -62,15 +64,23 @@
     return [self.datasource objectAtIndex:index];
 }
 
+- (void)showPayViewController:(NSInteger)index {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *popupViewController = [storyboard instantiateViewControllerWithIdentifier:@"pay"];
+    popupViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    popupViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    self.view.window.rootViewController.definesPresentationContext = YES;
+    [self.view.window.rootViewController presentViewController:popupViewController animated:YES completion:nil];
+}
+
 # pragma mark-- pageViewController delegate
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers {
-    self.pageViewController.view.userInteractionEnabled = NO;
+//    self.pageViewController.view.userInteractionEnabled = NO;
     self.currentIndex = [self.datasource indexOfObject:[pendingViewControllers firstObject]];
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
-    self.pageViewController.view.userInteractionEnabled = YES;
-
+//    self.pageViewController.view.userInteractionEnabled = YES;
     if (completed){
         if([self respondsToSelector:@selector(switched:)]){
             [self switched:self.currentIndex];
@@ -80,17 +90,53 @@
 
 # pragma mark-- switchView delegate
 - (void)switchPage:(NSInteger)index {
-    __weak typeof(self) weakSelf = self;
-    [self.pageViewController setViewControllers:@[self.datasource[index]] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:^(BOOL finished) {
+    if([self.type isEqualToString:@"list"]){
+        if([self checkPhoneticList:index]){
+            index = kCanUseNumPhoneticList - 1;
+        }
+    } else if([self.type isEqualToString:@"class"]){
+        if([self checkPhonetiClass:index]){
+            index = kCanUseNumPhoneticClass - 1;
+        }
+    }
+    UIPageViewControllerNavigationDirection direction = UIPageViewControllerNavigationDirectionForward;
+    if(self.currentIndex >= index){
+        direction = UIPageViewControllerNavigationDirectionReverse;
+    }
+    [self.pageViewController setViewControllers:@[self.datasource[index]] direction:direction animated:YES completion:^(BOOL finished) {
         if(finished) {
-            weakSelf.pageViewController.view.userInteractionEnabled = YES;
+            //            weakSelf.pageViewController.view.userInteractionEnabled = YES;
         }
     }];
     [self.switchView setIndexInfo:index];
+    self.currentIndex = index;
 }
 
 - (void)switched:(NSInteger)index {
     [self.switchView setIndexInfo:index];
+    if([self.type isEqualToString:@"list"]){
+        [self checkPhoneticList:index];
+    } else if([self.type isEqualToString:@"class"]){
+        [self checkPhonetiClass:index];
+    }
+}
+
+- (BOOL)checkPhoneticList:(NSInteger) index {
+    if(index >= kCanUseNumPhoneticList && ![[AppDelegate sharedAppDelegate] isPhoneticListVip]){
+        index = kCanUseNumPhoneticList - 1;
+        [self showPayViewController:index];
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)checkPhonetiClass:(NSInteger) index {
+    if(index >= kCanUseNumPhoneticClass && ![[AppDelegate sharedAppDelegate] isPhoneticClassVip]){
+        index = kCanUseNumPhoneticClass - 1;
+        [self showPayViewController:index];
+        return YES;
+    }
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning {

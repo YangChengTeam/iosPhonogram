@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:phonogram.xcodeproj">
+      location = "group:/Users/zhangkai/Desktop/phonogram/phonogram.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

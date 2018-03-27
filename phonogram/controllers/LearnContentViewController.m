@@ -7,7 +7,7 @@
 //
 
 #import "LearnContentViewController.h"
-#import "LearnSampleCellCollectionViewCell.h"
+#import "LearnSampleCollectionViewCell.h"
 #import "VideoPlayView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -43,6 +43,18 @@
                                     nil];
     self.voiceImageView.animationDuration = 1.0f;
     self.voiceImageView.animationRepeatCount = 0;
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playVoice:)];
+    singleTap.numberOfTapsRequired = 1;
+    [self.wordImageView setUserInteractionEnabled:YES];
+    [self.wordImageView addGestureRecognizer:singleTap];
+}
+
+- (void)playVoice:(id)sender {
+    type = @"word";
+    NSURL *url = [NSURL URLWithString: self.phoneticInfo[@"voice"]];
+    [self play: url];
+    [self show:@"正在加载..."];
 }
 
 - (IBAction)playDesp:(id)sender {
@@ -72,6 +84,13 @@
         basicAnimation.removedOnCompletion = YES;
         basicAnimation.fillMode = kCAFillModeForwards;
         [itemView.layer addAnimation:basicAnimation forKey:nil];
+    } else if([type isEqualToString:@"word"]){
+        CABasicAnimation *basicAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+        basicAnimation.toValue = @0.8;
+        basicAnimation.duration = 1;
+        basicAnimation.removedOnCompletion = YES;
+        basicAnimation.fillMode = kCAFillModeForwards;
+        [self.wordImageView.layer addAnimation:basicAnimation forKey:nil];
     }
 }
 
@@ -93,13 +112,14 @@
     [self.voiceImageView stopAnimating];
 }
 
+#pragma  mark -- UICollectionView datasource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [self.phoneticInfo[@"example"] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *identifier = @"learnSampleCell";
-    LearnSampleCellCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    LearnSampleCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     NSDictionary *sampleInfo = self.phoneticInfo[@"example"][indexPath.row];
     
     NSString *word  = sampleInfo[@"word"];
@@ -118,6 +138,7 @@
     return cell;
 }
 
+#pragma  mark -- UICollectionView delegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     itemView = [collectionView cellForItemAtIndexPath:indexPath];
     
@@ -125,11 +146,12 @@
     [self playSample:sampleInfo[@"video"]];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+
+- (void)viewDidDisappear:(BOOL)animated {
     [self dismiss:nil];
     [self hideDespImageView];
     [self clear];
-    if(self.playerView){
+    if(self.playerView && !(self.playerView.moviePlayer.videoBounds.size.width > 250)){
         [self.playerView destory];
     }
 }

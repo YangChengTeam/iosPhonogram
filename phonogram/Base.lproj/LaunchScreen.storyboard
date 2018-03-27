@@ -28,10 +28,10 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="UKh-VC-ly6" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="1jv-gB-DSH"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="UKh-VC-ly6" secondAttribute="bottom" id="Y9L-al-JE6"/>
-                            <constraint firstItem="UKh-VC-ly6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="u7b-Hv-LJV"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="UKh-VC-ly6" secondAttribute="trailing" id="xwa-ET-0Wb"/>
+                            <constraint firstItem="UKh-VC-ly6" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="FfG-Mp-fWc"/>
+                            <constraint firstItem="UKh-VC-ly6" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="RGi-Hf-i3g"/>
+                            <constraint firstItem="UKh-VC-ly6" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" id="VgB-Zy-eEh"/>
+                            <constraint firstItem="UKh-VC-ly6" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="pzo-Iu-GdL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -42,7 +42,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="splash_bg" width="960" height="540"/>
-        <image name="splash_bg1" width="197" height="219"/>
+        <image name="splash_bg" width="640" height="360"/>
+        <image name="splash_bg1" width="131" height="146"/>
     </resources>
 </document>

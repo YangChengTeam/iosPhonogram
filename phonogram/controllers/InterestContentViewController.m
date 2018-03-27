@@ -27,8 +27,8 @@
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    if(self.playerView){
+- (void)viewDidDisappear:(BOOL)animated {
+    if(self.playerView && !(self.playerView.moviePlayer.videoBounds.size.width > 250)){
         [self.playerView destory];
     }
 }

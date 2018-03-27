@@ -14,7 +14,6 @@
 @required
 -(void)switchPage: (NSInteger)index;
 
-
 @end
 
 @interface SwitchView : BaseView

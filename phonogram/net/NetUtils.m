@@ -10,7 +10,7 @@
 #import "AFNetworking/AFNetworking.h"
 #import "EncrytUtils.h"
 #import "UIAlertView+Block.h"
-
+#import <AdSupport/ASIdentifierManager.h>
 #define UUID @"uuid"
 
 @implementation NetUtils
@@ -50,21 +50,19 @@
         NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
         NSString *uuidString = [defaults stringForKey:UUID];
         if(!uuidString){
-            CFUUIDRef udid = CFUUIDCreate(NULL);
-            uuidString = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, udid));
-            uuidString = [[uuidString stringByReplacingOccurrencesOfString:@"-"
-                                                                withString:@""] lowercaseString];
+            uuidString = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+;
             [defaults setObject:uuidString forKey:UUID];
             [defaults synchronize];
         }
-        [defaultParams setValue:uuidString forKey:@"i"];
-        
+        [defaultParams setValue:uuidString forKey:@"imeil"];
+        [defaultParams setValue:@"1" forKey:@"agent_id"];
         //systemVersion
         NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
         [defaultParams setValue:[NSString stringWithFormat:@"iOS%@", systemVersion] forKey:@"sv"];
         
         //设备类型
-        [defaultParams setValue:@"3" forKey:@"d"];
+        [defaultParams setValue:@"3" forKey:@"device_type"];
     }
     
     if(data){

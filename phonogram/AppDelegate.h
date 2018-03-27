@@ -13,10 +13,14 @@
 @property (nonatomic, strong) NSDictionary *loginInfo;
 @property (nonatomic, strong) NSArray *phoneticList;
 @property (nonatomic, strong) NSDictionary *phoneticClass;
+@property (nonatomic, strong) NSArray *vipList;
+
 
 @property (strong, nonatomic) UIWindow *window;
 
 + (AppDelegate *)sharedAppDelegate;
-
+- (BOOL)isVip;
+- (BOOL)isPhoneticListVip;
+- (BOOL)isPhoneticClassVip;
 @end
 

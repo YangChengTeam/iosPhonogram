@@ -19,10 +19,12 @@
 @property (nonatomic, strong) NSMutableArray *datasource;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) UIPageViewControllerTransitionStyle style;
+@property (nonatomic, assign) NSString *type;
 
 - (void)initDatasource;
 - (void)initPageViewController;
 - (void)switched:(NSInteger)index;
+- (void)showPayViewController:(NSInteger)index;
 @end
 
 

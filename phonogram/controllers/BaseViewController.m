@@ -47,6 +47,11 @@
     });
 }
 
+#pragma mark -- alert
+- (void)alert:(NSString *)message {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:@"" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:nil, nil];
+    [alert show];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

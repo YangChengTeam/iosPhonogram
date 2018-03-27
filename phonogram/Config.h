@@ -9,9 +9,18 @@
 #ifndef Config_h
 #define Config_h
 
+#define kNotiVipChange @"vip_change"
+
 #define kNotiPhoneticListLoadCompleted @"phonetic_list"
 #define kNotiPhoneticClassLoadCompleted @"phonetic_class"
+#define kNotiPhoneticListChange @"phonetic_list_chage"
+#define kNotiVipListLoadCompleted @"vip_list"
+#define kNotiShareSuccess @"share_success"
+#define kNotiPaySuccess @"pay_success"
+#define kNotiPayFailure @"pay_failure"
 
+#define kCanUseNumPhoneticList 4
+#define kCanUseNumPhoneticClass 1
 #define SERVER_DEBUG NO
 
 #define APPID @"?app_id=5"

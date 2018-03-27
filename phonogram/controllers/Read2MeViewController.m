@@ -21,16 +21,31 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.style = UIPageViewControllerTransitionStylePageCurl;
+    self.type = @"list";
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(change:)
+                                                 name:kNotiPhoneticListChange
+                                               object:nil];
     if([AppDelegate sharedAppDelegate].phoneticList){
         [self initPageViewController];
         return;
     } else {
-        [self show:@"正在加载"];
+        [self show:@"正在加载..."];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(setupPhoneticList:)
                                                      name:kNotiPhoneticListLoadCompleted
                                                    object:nil];
     }
+    
+}
+
+
+- (void)change:(NSNotification *)noti {
+    if(!noti.object){
+        return;
+    }
+    NSIndexPath *indexPath = noti.object;
+    [self switchPage:indexPath.row];
 }
 
 - (void)setupPhoneticList:(NSNotification *)noti {

@@ -8,9 +8,7 @@
 
 #import "VideoPlayView.h"
 
-#import <MediaPlayer/MediaPlayer.h>
-#import <AVFoundation/AVFoundation.h>
-#import <AVKit/AVKit.h>
+
 #import "AppDelegate.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -18,7 +16,6 @@
 @property (nonatomic, assign) IBOutlet UIView *playerView;
 @property (nonatomic, assign) IBOutlet UIImageView *coverImageView;
 
-@property (strong,nonatomic) AVPlayerViewController *moviePlayer;
 @property (strong,nonatomic) AVPlayer *player;
 @property (strong,nonatomic) AVPlayerItem *item;
 
@@ -43,18 +40,25 @@
 
 - (IBAction)play:(id)sender {
     self.item = [AVPlayerItem playerItemWithURL:[NSURL URLWithString: self.videoUrl]];
+
     self.player = [AVPlayer playerWithPlayerItem: self.item];
     self.moviePlayer = [[AVPlayerViewController alloc] init];
     self.moviePlayer.player = self.player;
     self.moviePlayer.view.frame = self.playerView.bounds;
+    self.moviePlayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+
     [self.item addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+    [self.item addObserver:self forKeyPath:@"videoBounds" options:NSKeyValueObservingOptionNew context:nil];
     [self.playerView addSubview:self.moviePlayer.view];
+    
 }
 
 - (void)destory {
     [self.player pause];
     [self.moviePlayer.view removeFromSuperview];
     [self.item removeObserver:self forKeyPath:@"status"];
+    [self.item removeObserver:self forKeyPath:@"videoBounds"];
+    
     self.item = nil;
     self.player = nil;
     self.moviePlayer.player = nil;
@@ -72,6 +76,13 @@
             return;
         }
         [self destory];
+    } else if ([keyPath isEqualToString:@"videoBounds"]){
+        CGRect newRect = [change[NSKeyValueChangeNewKey] CGRectValue];
+        if(newRect.size.width > 250){
+            self.isFullScreen = YES;
+        } else {
+            self.isFullScreen = NO;
+        }
     }
 }
 

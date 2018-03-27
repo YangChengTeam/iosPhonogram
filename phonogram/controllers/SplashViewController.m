@@ -11,14 +11,14 @@
 #import "AppDelegate.h"
 #import "NetUtils.h"
 #import "Config.h"
-
+#import "UIAlertView+Block.h"
 
 
 @interface SplashViewController ()
 @end
 
 @implementation SplashViewController {
-    
+    NSString *msg;
 }
 
 - (void)viewDidLoad {
@@ -26,11 +26,10 @@
     // Do any additional setup after loading the view.
     [self playSplashAudio];
     [NetUtils postWithUrl:INIT_URL params:nil callback:^(NSDictionary *data) {
-        if(data && [data[@"code"] integerValue] == 1){
+        if(data && [data[@"code"] integerValue] == 1) {
             [AppDelegate sharedAppDelegate].loginInfo = data[@"data"];
-        }
-        if(self.isOver){
-            [self redirect2Main];
+        } else {
+            msg = data[@"msg"];
         }
     }];
 }
@@ -75,6 +74,11 @@
 - (void)finished {
     if([AppDelegate sharedAppDelegate].loginInfo){
         [self redirect2Main];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@,请联系管理员", msg] message:@"" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"知道了", nil];
+        [alertView showAlertViewWithCompleteBlock:^(NSInteger buttonIndex) {
+            exit(0);
+        }];
     }
 }
 

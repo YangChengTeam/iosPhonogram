@@ -7,8 +7,8 @@ target 'phonogram'
 pod 'SDWebImage', '~> 4.0'
 pod 'AFNetworking', '~> 3.0'
 pod 'YYCache'
-pod 'PopupDialog'
 pod 'MBProgressHUD'
+pod 'Toast'
 
 
 

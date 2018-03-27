@@ -234,17 +234,12 @@
     cell.priceLabel.text = [NSString stringWithFormat:@"¥%@", vipInfo[@"real_price"]];
     cell.oldPriceLabel.text = [NSString stringWithFormat:@"原价%@元", vipInfo[@"price"]];
     if([vipInfo[@"is_vip"] boolValue]){
-        cell.selectButton.enabled = NO;
-        [cell.selectButton setImage:[UIImage imageNamed:@"pay_selected.png"] forState: UIControlStateNormal];
-        [cell.selectButton setImage:[UIImage imageNamed:@"pay_selected.png"] forState: UIControlStateDisabled];
+        cell.selectImageView.image = [UIImage imageNamed:@"pay_selected.png"];
     } else {
-        cell.selectButton.enabled = YES;
-        [cell.selectButton setImage:[UIImage imageNamed:@"pay_select_normal.png"] forState: UIControlStateNormal];
-        [cell.selectButton setImage:[UIImage imageNamed:@"pay_select_normal.png"] forState: UIControlStateDisabled];
         if(currentIndex == indexPath.row){
-            cell.selectButton.selected = YES;
+            cell.selectImageView.image = [UIImage imageNamed:@"pay_select_press.png"];
         } else {
-            cell.selectButton.selected = NO;
+            cell.selectImageView.image = [UIImage imageNamed:@"pay_select_normal.png"];
         }
     }
     return cell;

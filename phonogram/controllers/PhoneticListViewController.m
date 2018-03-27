@@ -59,9 +59,8 @@
 
 #pragma  mark -- UICollectionView delegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPhoneticListChange object:indexPath];
-    [self dismissViewControllerAnimated:YES completion:^{
-        
+    [self dismissViewControllerAnimated:NO completion:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPhoneticListChange object:indexPath];
     }];
 }
 

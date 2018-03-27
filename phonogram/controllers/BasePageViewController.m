@@ -92,13 +92,32 @@
 - (void)switchPage:(NSInteger)index {
     if([self.type isEqualToString:@"list"]){
         if([self checkPhoneticList:index]){
+            return;
+        }
+    } else if([self.type isEqualToString:@"class"]){
+        if([self checkPhonetiClass:index]){
+            return;
+        }
+    }
+    [self switchPage2:index];
+}
+
+- (void)switched:(NSInteger)index {
+    [self.switchView setIndexInfo:index];
+    if([self.type isEqualToString:@"list"]){
+        if([self checkPhoneticList:index]){
             index = kCanUseNumPhoneticList - 1;
+            [self switchPage2:index];
         }
     } else if([self.type isEqualToString:@"class"]){
         if([self checkPhonetiClass:index]){
             index = kCanUseNumPhoneticClass - 1;
+            [self switchPage2:index];
         }
     }
+}
+
+- (void)switchPage2:(NSInteger)index {
     UIPageViewControllerNavigationDirection direction = UIPageViewControllerNavigationDirectionForward;
     if(self.currentIndex >= index){
         direction = UIPageViewControllerNavigationDirectionReverse;
@@ -110,15 +129,6 @@
     }];
     [self.switchView setIndexInfo:index];
     self.currentIndex = index;
-}
-
-- (void)switched:(NSInteger)index {
-    [self.switchView setIndexInfo:index];
-    if([self.type isEqualToString:@"list"]){
-        [self checkPhoneticList:index];
-    } else if([self.type isEqualToString:@"class"]){
-        [self checkPhonetiClass:index];
-    }
 }
 
 - (BOOL)checkPhoneticList:(NSInteger) index {

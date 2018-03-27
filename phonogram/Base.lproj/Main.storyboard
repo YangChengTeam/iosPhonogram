@@ -977,13 +977,6 @@
                                                                 <constraint firstAttribute="height" constant="30" id="yfB-dr-Nsh"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1jt-pC-vcm">
-                                                            <rect key="frame" x="418" y="16" width="27" height="27"/>
-                                                            <state key="normal" image="pay_select_normal"/>
-                                                            <state key="disabled" image="pay_selected"/>
-                                                            <state key="selected" image="pay_select_press"/>
-                                                            <state key="highlighted" image="pay_select_press"/>
-                                                        </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="音标课堂+趣味音标课+学习保" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUR-Vw-65a">
                                                             <rect key="frame" x="45" y="9" width="240" height="21"/>
                                                             <constraints>
@@ -1015,6 +1008,10 @@
                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pay_select_normal" translatesAutoresizingMaskIntoConstraints="NO" id="YMA-JZ-qOo">
+                                                            <rect key="frame" x="418" y="16" width="27" height="27"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
                                                     </subviews>
                                                 </view>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1023,9 +1020,7 @@
                                                     <constraint firstItem="jhn-N0-f2t" firstAttribute="centerY" secondItem="UNf-Kk-Oj2" secondAttribute="centerY" id="N1Z-t9-YlP"/>
                                                     <constraint firstItem="pUR-Vw-65a" firstAttribute="leading" secondItem="jhn-N0-f2t" secondAttribute="trailing" constant="5" id="N9r-e6-SHP"/>
                                                     <constraint firstItem="7UJ-oq-4Y5" firstAttribute="centerY" secondItem="UNf-Kk-Oj2" secondAttribute="centerY" id="T8B-7U-x5A"/>
-                                                    <constraint firstAttribute="trailing" secondItem="1jt-pC-vcm" secondAttribute="trailing" id="cUN-40-Z0v"/>
                                                     <constraint firstItem="jhn-N0-f2t" firstAttribute="leading" secondItem="UNf-Kk-Oj2" secondAttribute="leading" constant="10" id="kpv-Lw-x5J"/>
-                                                    <constraint firstItem="1jt-pC-vcm" firstAttribute="centerY" secondItem="UNf-Kk-Oj2" secondAttribute="centerY" id="r16-Ri-W8E"/>
                                                     <constraint firstItem="pUR-Vw-65a" firstAttribute="top" secondItem="UNf-Kk-Oj2" secondAttribute="topMargin" constant="1" id="tGE-10-cv9"/>
                                                 </constraints>
                                                 <connections>
@@ -1033,7 +1028,7 @@
                                                     <outlet property="numImageView" destination="jhn-N0-f2t" id="MvG-0C-3ST"/>
                                                     <outlet property="oldPriceLabel" destination="c8v-BZ-zsb" id="cdU-BL-d6U"/>
                                                     <outlet property="priceLabel" destination="b2x-uV-5UR" id="LRX-us-7iC"/>
-                                                    <outlet property="selectButton" destination="1jt-pC-vcm" id="lKa-x4-DGO"/>
+                                                    <outlet property="selectImageView" destination="YMA-JZ-qOo" id="lFA-En-5XH"/>
                                                     <outlet property="titleLabel" destination="pUR-Vw-65a" id="PHo-af-geE"/>
                                                 </connections>
                                             </collectionViewCell>
@@ -1520,8 +1515,6 @@
         <image name="pay_delete" width="46" height="46"/>
         <image name="pay_main_bg" width="507" height="324"/>
         <image name="pay_select_normal" width="27" height="27"/>
-        <image name="pay_select_press" width="27" height="27"/>
-        <image name="pay_selected" width="27" height="27"/>
         <image name="pay_wx_normal" width="217" height="60"/>
         <image name="pay_wx_press" width="217" height="60"/>
         <image name="ppw_phonogram_bg" width="480" height="291"/>

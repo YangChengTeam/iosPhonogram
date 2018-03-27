@@ -15,6 +15,6 @@
 @property (nonatomic, assign) IBOutlet UILabel  *despLabel;
 @property (nonatomic, assign) IBOutlet UILabel  *priceLabel;
 @property (nonatomic, assign) IBOutlet UILabel  *oldPriceLabel;
-@property (nonatomic, assign) IBOutlet UIButton *selectButton;
+@property (nonatomic, assign) IBOutlet UIImageView *selectImageView;
 
 @end

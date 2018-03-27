@@ -118,7 +118,7 @@
     }
 }
 
-#pragma mark 支付宝方法
+#pragma mark 支付宝回调方法
 - (void)onAlipayResp:(NSDictionary *)resultDic {
     if(resultDic && resultDic[@"resultStatus"] == 0){
          [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPaySuccess object:nil];

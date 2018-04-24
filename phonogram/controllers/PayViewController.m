@@ -11,14 +11,10 @@
 #import "PayCollectionViewCell.h"
 #import "Config.h"
 #import "NetUtils.h"
-#import "WXApi.h"
 #import "UIView+Toast.h"
-#import <AlipaySDK/AlipaySDK.h>
-#import "APAuthInfo.h"
-#import "APOrderInfo.h"
-#import "APRSASigner.h"
+#import "IAPManager.h"
 
-@interface PayViewController ()<UICollectionViewDelegate, UICollectionViewDataSource>
+@interface PayViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, IAPManagerDelegate>
 
 @property (nonatomic, assign) IBOutlet UIButton *wxpayButton;
 @property (nonatomic, assign) IBOutlet UIButton *alipayButton;
@@ -29,13 +25,16 @@
 
 @implementation PayViewController {
     NSInteger currentIndex;
+    NSString *currentOrderId;
     NSInteger payType;
+    NSInteger n;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     currentIndex = 0;
     payType = 0;
+    n = 3;
     // Do any additional setup after loading the view.
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(paySuccess:)
@@ -45,6 +44,12 @@
                                              selector:@selector(payFailure:)
                                                  name:kNotiPayFailure
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(payCancel:)
+                                                 name:kNotiPayCancel
+                                               object:nil];
+    [IAPManager sharedManager].delegate = self;
     if(![AppDelegate sharedAppDelegate].vipList){
         [self show:@"正在加载..."];
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -61,36 +66,22 @@
 
 - (void)paySuccess:(NSNotification *)noti {
     __weak typeof(self) weakSelf = self;
+    currentOrderId = @"";
     [self dismissViewControllerAnimated:YES completion:^{
         [weakSelf updateVipList];
     }];
 }
 
 - (void)payFailure:(NSNotification *)noti {
-    if([noti.object isKindOfClass:[PayResp class]]){
-        PayResp *resp = noti.object;
-        if(resp.errCode == -2){
-            [self.view makeToast:@"支付取消"
-                        duration:3.0
-                        position:CSToastPositionCenter];
-        } else {
-            [self.view makeToast:@"支付失败"
-                        duration:3.0
-                        position:CSToastPositionCenter];
-        }
-    
-    } else if([noti.object isKindOfClass:[NSDictionary class]]){
-        NSDictionary *resp = noti.object;
-        if([resp[@"resultStatus"] integerValue] == 6001){
-            [self.view makeToast:@"支付取消"
-                        duration:3.0
-                        position:CSToastPositionCenter];
-        } else {
-            [self.view makeToast:@"支付失败"
-                        duration:3.0
-                        position:CSToastPositionCenter];
-        }
-    }
+    [self.view makeToast:@"支付失败"
+                duration:3.0
+                position:CSToastPositionCenter];
+}
+
+- (void)payCancel:(NSNotification *)noti {
+    [self.view makeToast:@"支付取消"
+                duration:3.0
+                position:CSToastPositionCenter];
 }
 
 - (void)updateVipList {
@@ -112,32 +103,21 @@
 - (IBAction)paySubmit:(id)sender {
     NSDictionary *info = [AppDelegate sharedAppDelegate].vipList[currentIndex];
     NSDictionary *params = nil;
-    if(payType == 0){
-        params = @{
-                                 @"goods_id": info[@"id"],
-                                 @"goods_num": @"1",
-                                 @"payway_name": @"wxpay",
-                                 @"money": info[@"real_price"]
-                                 };
-    } else if(payType == 1){
-        params = @{
-                                 @"goods_id": info[@"id"],
-                                 @"goods_num": @"1",
-                                 @"payway_name": @"alipay",
-                                 @"money": info[@"real_price"]
-                                 };
-    }
+    params = @{
+               @"goods_id": info[@"id"],
+               @"goods_num": @"1",
+               @"payway_name": @"iap",
+               @"money": info[@"real_price"]
+               };
     [self show:@"正在创建订单..."];
+    __weak typeof(self) weakSelf = self;
     [NetUtils postWithUrl:ORDER_URL params:params callback:^(NSDictionary *data) {
-        [self dismiss:nil];
         if(data && [data[@"code"] integerValue] == 1) {
-            if(payType == 0){
-                [self wxpay:data[@"data"]];
-            } else if(payType == 1){
-                [self alipay:data[@"data"]];
-            }
+            currentOrderId = data[@"data"][@"order_sn"];
+            [weakSelf iapPay:info];
         } else {
-            [self.view makeToast:data[@"msg"]
+            [weakSelf dismiss:nil];
+            [weakSelf.view makeToast:data[@"msg"]
                             duration:3.0
                             position:CSToastPositionCenter];
         }
@@ -145,78 +125,80 @@
 }
 
 
-
-- (void)wxpay:(NSDictionary *)info {
-    PayReq *request = [[PayReq alloc] init];
-    request.partnerId = info[@"params"][@"mch_id"];
-    request.prepayId= info[@"params"][@"prepay_id"];
-    request.package = @"Sign=WXPay";
-    request.nonceStr= info[@"params"][@"nonce_str"];
-    request.timeStamp = [info[@"params"][@"timestamp"] intValue];
-    request.sign= info[@"params"][@"sign"];
-    [WXApi sendReq:request];
+- (void)iapPay:(NSDictionary *)orderInfo {
+    [self show:@"请稍后..."];
+    [[IAPManager sharedManager] requestProductWithId: [NSString stringWithFormat:@"SE%@", orderInfo[@"id"]] userId: [AppDelegate sharedAppDelegate].loginInfo[@"user_info"][@"user_id"]  count:1];
 }
 
-- (void)alipay:(NSDictionary *)info {
-    NSString *appID = info[@"params"][@"appid"];
-    NSString *rsa2PrivateKey = info[@"params"][@"privatekey"];
-   
-    //将商品信息赋予AlixPayOrder的成员变量
-    APOrderInfo* order = [APOrderInfo new];
-    
-    // NOTE: app_id设置
-    order.app_id = appID;
-    
-    // NOTE: 支付接口名称
-    order.method = @"alipay.trade.app.pay";
-    
-    // NOTE: 参数编码格式
-    order.charset = @"utf-8";
-    
-    // NOTE: 当前时间点
-    NSDateFormatter* formatter = [NSDateFormatter new];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    order.timestamp = [formatter stringFromDate:[NSDate date]];
-    
-    // NOTE: 支付版本
-    order.version = @"1.0";
-    
-    // NOTE: sign_type设置
-    order.sign_type = @"RSA2";
-    
-    
-    // NOTE: 商品数据
-    NSDictionary *vipInfo = [AppDelegate sharedAppDelegate].vipList[currentIndex];
-    order.biz_content = [APBizContent new];
-    order.biz_content.body = vipInfo[@"title"];
-    order.biz_content.subject =vipInfo[@"title"];
-    order.biz_content.out_trade_no = info[@"order_sn"]; //订单ID（由商家自行制定）
-    order.biz_content.timeout_express = @"30m"; //超时时间设置
-    order.biz_content.total_amount = vipInfo[@"real_price"]; //商品价格
-    
-    //将商品信息拼接成字符串
-    NSString *orderInfo = [order orderInfoEncoded:NO];
-    NSString *orderInfoEncoded = [order orderInfoEncoded:YES];
-    
-    // NOTE: 获取私钥并将商户信息签名，外部商户的加签过程请务必放在服务端，防止公私钥数据泄露；
-    //       需要遵循RSA签名规范，并将签名字符串base64编码和UrlEncode
-    APRSASigner* signer = [[APRSASigner alloc] initWithPrivateKey:rsa2PrivateKey];
 
-    NSString *signedString = [signer signString:orderInfo withRSA2:YES];
-    
-    // NOTE: 如果加签成功，则继续执行支付
-    if (signedString != nil) {
-        //应用注册scheme,在AliSDKDemo-Info.plist定义URL types
-        NSString *appScheme = @"yinbao";
-        
-        // NOTE: 将签名成功字符串格式化为订单字符串,请严格按照该格式
-        NSString *orderString = [NSString stringWithFormat:@"%@&sign=%@",
-                                 orderInfoEncoded, signedString];
-        
-        // NOTE: 调用支付结果开始支付
-        [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-        }];
+#pragma mark -- 接收内购支付回调
+- (void)receiveProduct:(SKProduct *)product {
+    NSLog(@"%@", @"接收内购支付回调");
+    [self dismiss:nil];
+    if (product != nil) {
+        if (![[IAPManager sharedManager] purchaseProduct:product]) {
+            [self alert:@"您禁止了应用内购买权限,请到设置中开启!"];
+        }
+    } else {
+        [self alert:@"无法获取产品信息"];
     }
+}
+
+#pragma mark -- 订单验证
+- (void)checkOrder:(NSString *)transactionReceiptString {
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    [params setValue:transactionReceiptString forKey:@"receipt"];
+    [params setValue:currentOrderId forKey:@"order_sn"];
+    __weak typeof(self) weakSelf = self;
+    [NetUtils postWithUrl:CHECK_URL params:params callback:^(NSDictionary *res){
+        [[IAPManager sharedManager] finishTransaction];
+        if(res && [res[@"code"] integerValue] == 1){
+            [weakSelf dismiss:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPaySuccess object:nil];
+            
+        } else {
+            if(--n > 0){
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [weakSelf checkOrder:transactionReceiptString];
+                    });
+                });
+                return;
+            }
+            [weakSelf dismiss:nil];
+            n = 3;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPayFailure object:nil];
+        }
+    } error:^(NSError * error) {
+        [weakSelf showByError:error];
+        if(!error){
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPayFailure object:nil];
+        }
+        
+    }];
+}
+
+#pragma mark -- 购买成功
+- (void)successedWithReceipt:(NSData *)transactionReceipt {
+    NSLog(@"%@", @"购买成功 开始验证订单");
+    NSString  *transactionReceiptString = [transactionReceipt base64EncodedStringWithOptions:0];
+    if ([transactionReceiptString length] > 0) {
+        [self show:@"订单校验中..."];
+        [self checkOrder:transactionReceiptString];
+    }
+}
+
+
+#pragma mark -- 购买失败
+- (void)failedPurchaseWithError:(NSString *)errorDescripiton {
+    NSLog(@"%@", @"购买失败");
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPayFailure object:nil];
+}
+
+#pragma mark -- 取消购买
+- (void)canceledPurchaseWithError:(NSString *)errorDescripiton {
+    NSLog(@"%@", @"取消购买");
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPayCancel object:nil];
 }
 
 #pragma mark -- UICollectionView datasource

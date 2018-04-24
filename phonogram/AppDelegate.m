@@ -10,11 +10,10 @@
 #import <UMCommon/UMCommon.h>
 #import <UMAnalytics/MobClick.h>
 #import <UMShare/UMShare.h>
-#import "WXApi.h"
 #import "Config.h"
-#import <AlipaySDK/AlipaySDK.h>
 
-@interface AppDelegate ()<WXApiDelegate>
+
+@interface AppDelegate ()
 @end
 
 @implementation AppDelegate
@@ -27,7 +26,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [WXApi registerApp:@"wx2d0b6315f8d80d64"];
     [self configUM];
     return YES;
 }
@@ -79,12 +77,8 @@
       BOOL result = [[UMSocialManager defaultManager]  handleOpenURL:url options:options];
     if(!result){
         if ([url.host isEqualToString:@"safepay"]) {
-            [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-                [self onAlipayResp:resultDic];
-            }];
             return result;
         }
-        return [WXApi handleOpenURL:url delegate:self];
     }
     return result;
 }
@@ -92,39 +86,9 @@
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
     if(!result){
-        if ([url.host isEqualToString:@"safepay"]) {
-            [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-                [self onAlipayResp:resultDic];
-            }];
-            return result;
-        }
-        return [WXApi handleOpenURL:url delegate:self];
+       
     }
     return result;
-}
-
-#pragma mark 微信回调方法
-- (void)onResp:(BaseResp *)resp {
-    if ([resp isKindOfClass: [PayResp class]]){
-        PayResp *response = (PayResp*)resp;
-        switch(response.errCode){
-            case WXSuccess:
-                [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPaySuccess object:nil];
-                break;
-            default:
-                [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPayFailure object:response];
-                break;
-        }
-    }
-}
-
-#pragma mark 支付宝回调方法
-- (void)onAlipayResp:(NSDictionary *)resultDic {
-    if(resultDic && resultDic[@"resultStatus"] == 0){
-         [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPaySuccess object:nil];
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotiPayFailure object:resultDic];
-    }
 }
 
 

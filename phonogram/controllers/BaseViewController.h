@@ -22,5 +22,6 @@ blue:((float)(rgbValue & 0xFF)) / 255.0 alpha:1.0]
 - (void)show:(NSString *)message;
 - (void)dismiss:(void (^)(void))callback;
 - (void)alert:(NSString *)message;
+- (void)showByError:(NSError *)error;
 
 @end

@@ -18,9 +18,10 @@
 #define kNotiShareSuccess @"share_success"
 #define kNotiPaySuccess @"pay_success"
 #define kNotiPayFailure @"pay_failure"
+#define kNotiPayCancel @"pay_cancel"
 
-#define kCanUseNumPhoneticList 4
-#define kCanUseNumPhoneticClass 1
+#define kCanUseNumPhoneticList 100
+#define kCanUseNumPhoneticClass 100
 #define SERVER_DEBUG NO
 
 #define APPID @"?app_id=5"
@@ -31,7 +32,7 @@
 #define VIP_LIST_URL [NSString stringWithFormat:@"%@index/vip_list%@", BASE_URL, APPID]
 
 #define ORDER_URL [NSString stringWithFormat:@"%@index/pay%@", BASE_URL, APPID]
-#define CHECK_URL [NSString stringWithFormat:@"%@index/orders_check%@", BASE_URL, APPID]
+#define CHECK_URL [NSString stringWithFormat:@"%@index3/ios_order_query%@", BASE_URL, APPID]
 #define QUERY_URL [NSString stringWithFormat:@"%@index/orders_query%@", BASE_URL, APPID]
 
 #define PAY_WAY_LIST_URL [NSString stringWithFormat:@"%@index/payway_list%@", BASE_URL, APPID]

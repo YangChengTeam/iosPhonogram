@@ -20,28 +20,38 @@
 }
 
 - (void)show:(NSString *)message {
-    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    self.hud.label.font = [UIFont systemFontOfSize: 14];
+    if(!self.hud){
+        self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.hud.label.font = [UIFont systemFontOfSize: 14];
+    }
     self.hud.label.text = message;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(20 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if(self.hud){
-                [self.hud hideAnimated:YES];
-                self.hud = nil;
-            }
-        });
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(20 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if(self.hud){
+//                [self.hud hideAnimated:YES];
+//                self.hud = nil;
+//            }
+//        });
+//    });
+}
+
+- (void)showByError:(NSError *)error {
+    [self dismiss:nil];
+    if(error){
+        [self show:@"重试中..."];
+    }
 }
 
 - (void)dismiss:(void (^)(void))callback {
+    __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         if(callback){
             callback();
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            if(self.hud){
-                [self.hud hideAnimated:YES];
-                self.hud = nil;
+            if(weakSelf.hud){
+                [weakSelf.hud hideAnimated:YES];
+                weakSelf.hud = nil;
             }
         });
     });
